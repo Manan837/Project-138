@@ -24,9 +24,31 @@ var ball = {
 function setup(){
   var canvas =  createCanvas(700,600);
   canvas.parent("canvas");
+  video = createCapture(VIDEO);
+  video.size(700, 600);
+  video.hide();
+
+  poseNet = ml5.poseNet(video, modelLoaded);
+  poseNet.on('pose', gotPoses);
+}
+
+function modelLoaded()
+{
+  console.log("model loaded");
+}
+
+function gotPoses(results)
+{
+  if(results.length > 0)
+  {
+    noseX = results[0].pose.nose.x;
+    noseY = results[0].pose.nose.Y;
+    console.log("right wrist x =" + noseX + "right wrist y = " + noseY);
+  }
 }
 
 function draw(){
+  image(video, 0, 0, 700, 600);
 
  background(0); 
 
