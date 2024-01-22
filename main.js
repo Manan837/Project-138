@@ -37,17 +37,31 @@ function modelLoaded()
   console.log("model loaded");
 }
 
+rightWristX="";
+rightWristY="";
+scoreRightWrist="";
+
 function gotPoses(results)
 {
   if(results.length > 0)
   {
-    noseX = results[0].pose.nose.x;
-    noseY = results[0].pose.nose.Y;
-    console.log("right wrist x =" + noseX + "right wrist y = " + noseY);
+    console.log(results);
+    rightWristX = results[0].pose.rightWrist.x;
+    rightWristY = results[0].pose.rightWrist.y;
+    scoreRightWrist = results[0].pose.keypoints[10].score;
+    console.log("right wrist x =" + rightWristX + "right wrist y = " + rightWristY);
+    console.log(scoreRightWrist);
   }
 }
 
 function draw(){
+  if(scoreRightWrist > 0.2)
+  {
+    fill(255, 0, 0);
+    stroke(100, 0, 0);
+    circle(rightWristX, rightWristY, 30)
+  }
+
   image(video, 0, 0, 700, 600);
 
  background(0); 
